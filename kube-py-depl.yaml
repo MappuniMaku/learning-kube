@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-py-depl
+  namespace: test-kube-app
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: kube-py
+  template:
+    metadata:
+      labels:
+        app: kube-py
+    spec:
+      containers:
+        - image: grigorydocker/test-kube-py
+          imagePullPolicy: Always
+          name: kube-py-cont
+          ports:
+            - containerPort: 5000

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-be-depl
+  namespace: test-kube-app
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: kube-be
+  template:
+    metadata:
+      labels:
+        app: kube-be
+    spec:
+      containers:
+        - image: grigorydocker/test-kube-be
+          imagePullPolicy: Always
+          name: kube-be-cont
+          env:
+            - name: SA_LOGIC_API_URL
+              value: "http://kube-py-lb"
+          ports:
+            - containerPort: 8080

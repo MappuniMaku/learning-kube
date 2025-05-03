@@ -20,7 +20,7 @@ spec:
         app: kube-fe
     spec:
       containers:
-        - image: grigorydocker/test-kube-fe:1.0.7
+        - image: grigorydocker/test-kube-fe:1.0.4
           imagePullPolicy: Always
           name: kube-fe-cont
           ports:
